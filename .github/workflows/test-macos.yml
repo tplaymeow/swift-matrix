@@ -12,6 +12,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Setup Swift
+      uses: SwiftyLab/setup-swift@v1
+      with:
+        swift-version: '5.9'
     - name: Install
       run: make install-all-macos
     - name: Run tests
