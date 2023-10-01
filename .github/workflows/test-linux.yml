@@ -1,0 +1,22 @@
+name: Test (Linux)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Swift
+      uses: sersoft-gmbh/swifty-linux-action@v3
+      with:
+        release-version: 5.7.0
+    - name: Install
+      run: make install-all-linux
+    - name: Run tests
+      run: make test
