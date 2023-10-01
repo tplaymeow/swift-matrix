@@ -7,15 +7,11 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  test:
     runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Setup Swift
-      uses: SwiftyLab/setup-swift@latest
-      with:
-        swift-version: '5.9'
     - name: Install
       run: make install-all-macos
     - name: Run tests
