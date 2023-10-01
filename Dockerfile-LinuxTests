@@ -1,0 +1,13 @@
+FROM swift:latest
+
+WORKDIR /tmp
+
+ADD Sources ./Sources
+ADD Tests ./Tests
+ADD Package.swift ./
+
+RUN apt update \
+ && apt install -y libopenblas-dev \
+ && apt install -y liblapacke-dev
+
+CMD swift test
