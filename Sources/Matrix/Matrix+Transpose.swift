@@ -2,7 +2,7 @@ import COpenBLAS
 
 extension Matrix where Element == Double {
   @inlinable
-  public func transposed(multiplyBy multiplier: Double = 1.0) throws -> Self {
+  public func transposed(multiplyBy multiplier: Double = 1.0) -> Self {
     let rowsCount = Int32(self.rows)
     let columnsCount = Int32(self.columns)
     var data = self.data

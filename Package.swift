@@ -21,7 +21,7 @@ let package = Package(
       pkgConfig: "lapack",
       providers: [
         .brewItem(["lapack"]),
-        .brewItem(["liblapack-dev"]),
+        .aptItem(["liblapack-dev"]),
       ]
     ),
     .target(

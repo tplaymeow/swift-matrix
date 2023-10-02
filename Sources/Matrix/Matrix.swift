@@ -69,6 +69,21 @@ extension Matrix {
   }
 }
 
+extension Matrix where Element: Numeric {
+  @inlinable
+  public init(diogonal: [Element]) {
+    self.init(rows: diogonal.count, columns: diogonal.count, repeating: .zero)
+    for (index, element) in diogonal.enumerated() {
+      self[index, index] = element
+    }
+  }
+
+  @inlinable
+  public init(diogonalRepeating diogonalElement: Element, count: Int) {
+    self.init(diogonal: .init(repeating: diogonalElement, count: count))
+  }
+}
+
 extension Matrix {
   @inlinable
   public subscript(row: Int, column: Int) -> Element {
