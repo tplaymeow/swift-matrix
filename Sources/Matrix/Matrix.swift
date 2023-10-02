@@ -1,5 +1,8 @@
 public struct Matrix<Element> {
+  /// The number of rows in the matrix.
   public let rows: Int
+
+  /// The number of columns in the matrix.
   public let columns: Int
 
   @usableFromInline
@@ -14,6 +17,12 @@ public struct Matrix<Element> {
 }
 
 extension Matrix {
+  /// Initializes a new matrix with the specified number of rows and columns, filling it with a repeating element.
+  ///
+  /// - Parameters:
+  ///   - rows: The number of rows in the matrix.
+  ///   - columns: The number of columns in the matrix.
+  ///   - element: The element to repeat in the matrix.
   @inlinable
   public init(rows: Int, columns: Int, repeating element: Element) {
     self.rows = rows
@@ -23,6 +32,13 @@ extension Matrix {
 }
 
 extension Matrix {
+  /// Initializes a new matrix with the specified number of rows and columns, and an array of elements.
+  ///
+  /// - Parameters:
+  ///   - rows: The number of rows in the matrix.
+  ///   - columns: The number of columns in the matrix.
+  ///   - elements: An array of elements representing the matrix.
+  /// - Throws: `MatrixError` if the count of elements is not equal to `rows * columns`.
   @inlinable
   public init(rows: Int, columns: Int, elements: [Element]) throws {
     guard elements.count == rows * columns else {
@@ -36,6 +52,13 @@ extension Matrix {
 }
 
 extension Matrix {
+  /// Initializes a new matrix with the specified number of rows and columns, and a collection of elements.
+  ///
+  /// - Parameters:
+  ///   - rows: The number of rows in the matrix.
+  ///   - columns: The number of columns in the matrix.
+  ///   - elements: A collection of elements representing the matrix.
+  /// - Throws: `MatrixError` if the count of elements is not equal to `rows * columns`.
   @inlinable
   public init<C>(rows: Int, columns: Int, elements: C) throws
   where C: Collection, C.Element == Element {
@@ -50,6 +73,11 @@ extension Matrix {
 }
 
 extension Matrix {
+  /// Initializes a new matrix from a two-dimensional array of elements, where each sub-array represents a row.
+  ///
+  /// - Parameters:
+  ///   - rows: A two-dimensional array of elements representing the matrix.
+  /// - Throws: `MatrixError` if the rows are empty or if the rows have different column counts.
   @inlinable
   public init(rows: [[Element]]) throws {
     guard let firstRowCount = rows.first?.count else {
@@ -70,6 +98,10 @@ extension Matrix {
 }
 
 extension Matrix where Element: Numeric {
+  /// Initializes a new square matrix with elements on the main diagonal and zeros elsewhere.
+  ///
+  /// - Parameters:
+  ///   - diagonal: An array of elements for the main diagonal of the matrix.
   @inlinable
   public init(diogonal: [Element]) {
     self.init(rows: diogonal.count, columns: diogonal.count, repeating: .zero)
@@ -78,6 +110,11 @@ extension Matrix where Element: Numeric {
     }
   }
 
+  /// Initializes a new square matrix with a repeating element on the main diagonal and zeros elsewhere.
+  ///
+  /// - Parameters:
+  ///   - diagonalElement: The element to repeat on the main diagonal.
+  ///   - count: The number of rows and columns in the square matrix.
   @inlinable
   public init(diogonalRepeating diogonalElement: Element, count: Int) {
     self.init(diogonal: .init(repeating: diogonalElement, count: count))
@@ -85,6 +122,12 @@ extension Matrix where Element: Numeric {
 }
 
 extension Matrix {
+  /// Accesses the element at the specified row and column in the matrix.
+  ///
+  /// - Parameters:
+  ///   - row: The row index.
+  ///   - column: The column index.
+  /// - Returns: The element at the specified row and column.
   @inlinable
   public subscript(row: Int, column: Int) -> Element {
     _read {
@@ -97,6 +140,9 @@ extension Matrix {
 }
 
 extension Matrix {
+  /// Checks if the matrix is square (i.e., it has an equal number of rows and columns).
+  ///
+  /// - Returns: `true` if the matrix is square; otherwise, `false`.
   @inlinable
   public var isSquare: Bool {
     self.rows == self.columns

@@ -1,6 +1,8 @@
 import COpenBLAS
 
+/// An enumeration representing errors that can occur during matrix multiplication.
 public enum MatrixMultiplyError: Error {
+  /// The number of columns in the first matrix must be equal to the number of rows in the second matrix for multiplication.
   case incorrectSize
 }
 
@@ -15,6 +17,14 @@ extension MatrixMultiplyError: CustomStringConvertible {
 }
 
 extension Matrix where Element == Double {
+  /// Multiplies two matrices of the same data type.
+  ///
+  /// - Parameters:
+  ///   - left: The first matrix to multiply.
+  ///   - right: The second matrix to multiply.
+  /// - Returns: A new matrix resulting from the multiplication.
+  /// - Throws:
+  ///   - `MatrixMultiplyError.incorrectSize` if the number of columns in the first matrix is not equal to the number of rows in the second matrix.
   @inlinable
   public static func * (_ left: Self, _ right: Self) throws -> Self {
     guard left.columns == right.rows else {

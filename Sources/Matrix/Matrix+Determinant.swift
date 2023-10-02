@@ -1,7 +1,11 @@
 import CLapack
 
+/// An enumeration representing errors that can occur when calculating the determinant of a matrix.
 public enum MatrixDeterminantError: Error {
+  /// The matrix is not square, and its determinant cannot be calculated.
   case notSquare
+
+  /// An unknown error occurred during determinant calculation.
   case unknown
 }
 
@@ -18,6 +22,12 @@ extension MatrixDeterminantError: CustomStringConvertible {
 }
 
 extension Matrix where Element == Double {
+  /// Calculates the determinant of a square matrix.
+  ///
+  /// - Returns: The determinant of the matrix.
+  /// - Throws:
+  ///   - `MatrixDeterminantError.notSquare` if the matrix is not square.
+  ///   - `MatrixDeterminantError.unknown` if an unknown error occurs during calculation.
   @inlinable
   public func determinant() throws -> Double {
     guard self.isSquare else {
