@@ -1,7 +1,7 @@
 import COpenBLAS
 
 /// An enumeration representing errors that can occur during matrix multiplication.
-public enum MatrixMultiplyError: Error {
+public enum MatrixMultiplyError: Error, Sendable {
   /// The number of columns in the first matrix must be equal to the number of rows in the second matrix for multiplication.
   case incorrectSize
 }

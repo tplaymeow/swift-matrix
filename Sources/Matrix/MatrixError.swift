@@ -1,4 +1,4 @@
-public struct MatrixError: Error {
+public struct MatrixError: Error, Sendable {
   public let description: String
 
   @usableFromInline

@@ -1,7 +1,7 @@
 import CLapack
 
 /// An enumeration representing errors that can occur when calculating the determinant of a matrix.
-public enum MatrixDeterminantError: Error {
+public enum MatrixDeterminantError: Error, Sendable {
   /// The matrix is not square, and its determinant cannot be calculated.
   case notSquare
 

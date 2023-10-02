@@ -2,7 +2,7 @@ import CLapack
 import COpenBLAS
 
 /// An enumeration representing errors that can occur when calculating the inverse matrix.
-public enum MatrixInverseError: Error {
+public enum MatrixInverseError: Error, Sendable {
   /// The matrix is not square, and its inverse cannot be calculated.
   case notSquare
 
