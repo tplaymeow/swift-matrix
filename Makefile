@@ -23,6 +23,9 @@ test-linux-local:
 test:
 	@swift test
 
+benchmark:
+	@swift run -c release MatrixBenchmark
+
 format:
 	@swift-format \
 	--ignore-unparsable-files \

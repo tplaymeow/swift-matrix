@@ -7,6 +7,9 @@ let package = Package(
   products: [
     .library(name: "Matrix", targets: ["Matrix"])
   ],
+  dependencies: [
+    .package(url: "https://github.com/google/swift-benchmark", exact: "0.1.2")
+  ],
   targets: [
     .systemLibrary(
       name: "COpenBLAS",
@@ -35,6 +38,13 @@ let package = Package(
       name: "MatrixTests",
       dependencies: [
         "Matrix"
+      ]
+    ),
+    .executableTarget(
+      name: "MatrixBenchmark",
+      dependencies: [
+        "Matrix",
+        .product(name: "Benchmark", package: "swift-benchmark"),
       ]
     ),
   ]
