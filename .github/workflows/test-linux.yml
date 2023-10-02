@@ -13,10 +13,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup Swift
-      uses: sersoft-gmbh/swifty-linux-action@v3
-      with:
-        release-version: 5.7.0
+      uses: swift-actions/setup-swift@v1
     - name: Install
-      run: make install-all-linux
+      run: sudo make install-all-linux
     - name: Run tests
       run: make test
