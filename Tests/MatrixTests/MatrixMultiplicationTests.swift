@@ -21,8 +21,6 @@ final class MatrixMultiplicationTests: XCTestCase {
   }
 
   func testMatrixMultiply2() throws {
-    throw XCTSkip("Incorect result")
-
     let a = try Matrix(rows: [
       [2.0, 4.0],
       [1.0, 3.0],
@@ -32,8 +30,8 @@ final class MatrixMultiplicationTests: XCTestCase {
       [7.0, 8.0],
     ])
     let res = try Matrix(rows: [
-      [26.0, 32.0],
-      [20.0, 24.0],
+      [38.0, 44.0],
+      [26.0, 30.0],
     ])
     XCTAssertEqual(try a * b, res)
   }
@@ -97,8 +95,6 @@ final class MatrixMultiplicationTests: XCTestCase {
   }
 
   func testMatrixMultiply7() throws {
-    throw XCTSkip("Crash")
-
     let a = try Matrix(rows: [
       [1.0, 2.0, 3.0],
       [4.0, 5.0, 6.0],
@@ -132,8 +128,6 @@ final class MatrixMultiplicationTests: XCTestCase {
   }
 
   func testMatrixMultiply9() throws {
-    throw XCTSkip("Incorect result")
-
     let a = try Matrix(rows: [
       [1.0, 2.0],
       [3.0, 4.0],
@@ -152,8 +146,6 @@ final class MatrixMultiplicationTests: XCTestCase {
   }
 
   func testMatrixMultiply10() throws {
-    throw XCTSkip("Incorect result")
-
     let a = try Matrix(rows: [
       [1.0, 2.0]
     ])
@@ -199,8 +191,6 @@ final class MatrixMultiplicationTests: XCTestCase {
   }
 
   func testMatrixMultiply13() throws {
-    throw XCTSkip()
-
     let a = try Matrix(rows: [
       [1.0]
     ])
@@ -227,8 +217,6 @@ final class MatrixMultiplicationTests: XCTestCase {
   }
 
   func testMatrixMultiply15() throws {
-    throw XCTSkip("Incorect result")
-
     let a = try Matrix(rows: [
       [1.0, 2.0],
       [3.0, 4.0],

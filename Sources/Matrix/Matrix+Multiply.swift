@@ -36,7 +36,7 @@ extension Matrix where Element == Double {
       &leftData, leftColumnsRightRowsCount,
       &rightData, rightColumnsCount,
       0.0,
-      &resultData, leftRowsCount)
+      &resultData, rightColumnsCount)
 
     return Matrix(rows: left.rows, columns: right.columns, data: resultData)
   }

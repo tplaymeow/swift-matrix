@@ -119,13 +119,7 @@ final class MatrixInverseTests: XCTestCase {
       [4.0, 5.0, 6.0, 7.0],
       [8.0, 9.0, 10.0, 11.0],
     ])
-    let expectedMatrix = try Matrix(rows: [
-      [-0.5, -1.0, 0.5, 0.0],
-      [1.0, 2.0, -1.0, 0.0],
-      [-0.5, -1.0, 0.5, 1.0],
-      [0.0, 0.0, 0.0, 1.0],
-    ])
-    XCTAssertEqual(try matrix14.inversed(), expectedMatrix, accuracy: 0.000001)
+    XCTAssertThrowsError(try matrix14.inversed())
   }
 
   func testMatrixInverted15() throws {
@@ -136,41 +130,6 @@ final class MatrixInverseTests: XCTestCase {
       [10.0, 11.0, 12.0, 13.0, 14.0],
       [15.0, 16.0, 17.0, 18.0, 19.0],
     ])
-    let expectedMatrix = try Matrix(rows: [
-      [-6.0, 5.0, -3.0, 2.0, 1.0],
-      [4.0, -4.0, 3.0, -2.0, 1.0],
-      [-2.0, 3.0, -3.0, 2.0, -1.0],
-      [1.0, -2.0, 2.0, -1.0, 0.0],
-      [0.0, 0.0, 0.0, 0.0, 0.0],
-    ])
-    XCTAssertEqual(try matrix15.inversed(), expectedMatrix, accuracy: 0.000001)
-  }
-
-  func testMatrixInvertedLarge() throws {
-    // Create a large square matrix (1000x1000) with all elements as 1.0
-    var largeMatrix = [[Double]]()
-    for _ in 0..<1000 {
-      var row = [Double]()
-      for _ in 0..<1000 {
-        row.append(1.0)
-      }
-      largeMatrix.append(row)
-    }
-
-    let matrix16 = try Matrix(rows: largeMatrix)
-
-    // Create an identity matrix of the same size (1000x1000)
-    var identityMatrix = [[Double]]()
-    for i in 0..<1000 {
-      var row = [Double]()
-      for j in 0..<1000 {
-        row.append(i == j ? 1.0 : 0.0)
-      }
-      identityMatrix.append(row)
-    }
-
-    let expectedMatrix = try Matrix(rows: identityMatrix)
-
-    XCTAssertEqual(try matrix16.inversed(), expectedMatrix, accuracy: 0.000001)
+    XCTAssertThrowsError(try matrix15.inversed())
   }
 }
