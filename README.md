@@ -1,3 +1,6 @@
+![MacOS Test](https://github.com/tplaymeow/swift-matrix/actions/workflows/test-macos.yml/badge.svg)
+![Linux Test](https://github.com/tplaymeow/swift-matrix/actions/workflows/test-linux.yml/badge.svg)
+
 # Matrix
 
 Matrix is a Swift package that provides a flexible and efficient way to work with matrices. It offers a range of matrix operations, including creation, manipulation, and arithmetic operations.
