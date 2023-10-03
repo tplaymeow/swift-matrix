@@ -97,6 +97,16 @@ extension Matrix {
   }
 }
 
+extension Matrix {
+  public init(row: [Element]) {
+    self.init(rows: 1, columns: row.count, data: row)
+  }
+
+  public init(column: [Element]) {
+    self.init(rows: column.count, columns: 1, data: column)
+  }
+}
+
 extension Matrix where Element: Numeric {
   /// Initializes a new square matrix with elements on the main diagonal and zeros elsewhere.
   ///
