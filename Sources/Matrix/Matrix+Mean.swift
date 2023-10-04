@@ -23,11 +23,11 @@ extension Matrix where Element: FloatingPoint {
     switch axis {
     case .row:
       let rows = Element(self.rows)
-      return Matrix(column: self.sumAsArray(axis: .row).map { $0 / rows })
+      return self.sum(axis: .row).map { $0 / rows }
 
     case .column:
       let columns = Element(self.columns)
-      return Matrix(row: self.sumAsArray(axis: .column).map { $0 / columns })
+      return self.sum(axis: .column).map { $0 / columns }
     }
   }
 }

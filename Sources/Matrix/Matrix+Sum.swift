@@ -20,34 +20,6 @@ extension Matrix where Element: Numeric {
   ///   ```
   @inlinable
   public func sum(axis: MatrixAxis = .column) -> Matrix<Element> {
-    switch axis {
-    case .row:
-      return Matrix(column: self.sumAsArray(axis: .row))
-    case .column:
-      return Matrix(row: self.sumAsArray(axis: .column))
-    }
-  }
-
-  @usableFromInline
-  internal func sumAsArray(axis: MatrixAxis = .column) -> [Element] {
-    switch axis {
-    case .row:
-      var result: [Element] = .init(repeating: .zero, count: self.columns)
-      for column in 0..<self.columns {
-        for row in 0..<self.rows {
-          result[column] += self[row, column]
-        }
-      }
-      return result
-
-    case .column:
-      var result: [Element] = .init(repeating: .zero, count: self.rows)
-      for row in 0..<self.rows {
-        for column in 0..<self.columns {
-          result[row] += self[row, column]
-        }
-      }
-      return result
-    }
+    self.reduce(axis: axis, .zero, +)
   }
 }
