@@ -1,4 +1,5 @@
 import CLapack
+import LinearAlgebra
 
 /// An enumeration representing errors that can occur when calculating the determinant of a matrix.
 public enum MatrixDeterminantError: Error, Sendable {
@@ -21,7 +22,7 @@ extension MatrixDeterminantError: CustomStringConvertible {
   }
 }
 
-extension Matrix where Element == Double {
+extension Matrix where Element: LinearAlgebraScalar {
   /// Calculates the determinant of a square matrix.
   ///
   /// - Returns: The determinant of the matrix.
@@ -29,7 +30,7 @@ extension Matrix where Element == Double {
   ///   - `MatrixDeterminantError.notSquare` if the matrix is not square.
   ///   - `MatrixDeterminantError.unknown` if an unknown error occurs during calculation.
   @inlinable
-  public func determinant() throws -> Double {
+  public func determinant() throws -> Element {
     guard self.isSquare else {
       throw MatrixDeterminantError.notSquare
     }
@@ -39,7 +40,7 @@ extension Matrix where Element == Double {
     var ipiv32 = [Int32](repeating: 0, count: size)
     var resultData = self.data
 
-    let dgetrfResult = LAPACKE_dgetrf(
+    let dgetrfResult = Element.LAPACKE_getrf(
       LAPACK_ROW_MAJOR,
       size32,
       size32,
@@ -52,10 +53,10 @@ extension Matrix where Element == Double {
     }
 
     guard dgetrfResult == 0 else {
-      return 0.0
+      return 0
     }
 
-    var result = 1.0
+    var result: Element = 1
     for index in 0..<size {
       result *= resultData[index * self.columnsCount + index]
       if ipiv32[index] != index + 1 {

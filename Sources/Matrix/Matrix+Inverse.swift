@@ -1,5 +1,6 @@
 import CLapack
 import COpenBLAS
+import LinearAlgebra
 
 /// An enumeration representing errors that can occur when calculating the inverse matrix.
 public enum MatrixInverseError: Error, Sendable {
@@ -29,7 +30,7 @@ extension MatrixInverseError: CustomStringConvertible {
   }
 }
 
-extension Matrix where Element == Double {
+extension Matrix where Element: LinearAlgebraScalar {
   /// Calculates inverse matrix.
   ///
   /// - Returns: The inverse matrix.
@@ -57,7 +58,7 @@ extension Matrix where Element == Double {
     var ipiv32 = [Int32](repeating: 0, count: size)
     var resultData = self.data
 
-    let dgetrfResult = LAPACKE_dgetrf(
+    let dgetrfResult = Element.LAPACKE_getrf(
       LAPACK_ROW_MAJOR,
       size32,
       size32,
@@ -66,7 +67,7 @@ extension Matrix where Element == Double {
       &ipiv32)
     try check(result: dgetrfResult)
 
-    let dgetriResult = LAPACKE_dgetri(
+    let dgetriResult = Element.LAPACKE_getri(
       LAPACK_ROW_MAJOR,
       size32,
       &resultData,

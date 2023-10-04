@@ -1,6 +1,7 @@
 import COpenBLAS
+import LinearAlgebra
 
-extension Matrix where Element == Double {
+extension Matrix where Element: LinearAlgebraScalar {
   /// Transposes the current matrix and optionally multiplies it by a scalar.
   ///
   /// - Parameters:
@@ -21,12 +22,12 @@ extension Matrix where Element == Double {
   ///   // Resulting scaledTransposedMatrix: [[2.0, 8.0], [4.0, 10.0], [6.0, 12.0]]
   ///   ```
   @inlinable
-  public func transposed(multiplyBy multiplier: Double = 1.0) -> Self {
+  public func transposed(multiplyBy multiplier: Element = 1) -> Self {
     let rowsCount = Int32(self.rowsCount)
     let columnsCount = Int32(self.columnsCount)
     var data = self.data
     var resultData = self.data
-    cblas_domatcopy(
+    Element.cblas_omatcopy(
       CblasRowMajor, CblasTrans,
       rowsCount, columnsCount,
       multiplier,

@@ -1,4 +1,5 @@
 import COpenBLAS
+import LinearAlgebra
 
 /// An enumeration representing errors that can occur during matrix multiplication.
 public enum MatrixMultiplyError: Error, Sendable {
@@ -16,7 +17,7 @@ extension MatrixMultiplyError: CustomStringConvertible {
   }
 }
 
-extension Matrix where Element == Double {
+extension Matrix where Element: LinearAlgebraScalar {
   /// Multiplies two matrices of the same data type.
   ///
   /// - Parameters:
@@ -37,15 +38,17 @@ extension Matrix where Element == Double {
 
     var leftData = left.data
     var rightData = right.data
-    var resultData = Array(repeating: 0.0, count: left.rowsCount * right.columnsCount)
+    var resultData: [Element] = .init(
+      repeating: 0,
+      count: left.rowsCount * right.columnsCount)
 
-    cblas_dgemm(
+    Element.cblas_gemm(
       CblasRowMajor, CblasNoTrans, CblasNoTrans,
       leftRowsCount, rightColumnsCount, leftColumnsRightRowsCount,
-      1.0,
+      1,
       &leftData, leftColumnsRightRowsCount,
       &rightData, rightColumnsCount,
-      0.0,
+      0,
       &resultData, rightColumnsCount)
 
     return Matrix(

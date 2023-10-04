@@ -28,10 +28,18 @@ let package = Package(
       ]
     ),
     .target(
+      name: "LinearAlgebra",
+      dependencies: [
+        "COpenBLAS",
+        "CLapack",
+      ]
+    ),
+    .target(
       name: "Matrix",
       dependencies: [
         "COpenBLAS",
         "CLapack",
+        "LinearAlgebra",
       ]
     ),
     .testTarget(
