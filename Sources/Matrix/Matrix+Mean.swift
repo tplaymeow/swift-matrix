@@ -22,11 +22,11 @@ extension Matrix where Element: FloatingPoint {
   public func mean(axis: MatrixAxis = .column) -> Matrix<Element> {
     switch axis {
     case .row:
-      let rows = Element(self.rows)
+      let rows = Element(self.rowsCount)
       return self.sum(axis: .row).map { $0 / rows }
 
     case .column:
-      let columns = Element(self.columns)
+      let columns = Element(self.columnsCount)
       return self.sum(axis: .column).map { $0 / columns }
     }
   }

@@ -52,7 +52,7 @@ extension Matrix where Element == Double {
       }
     }
 
-    let size = self.rows
+    let size = self.rowsCount
     let size32 = Int32(size)
     var ipiv32 = [Int32](repeating: 0, count: size)
     var resultData = self.data
@@ -74,6 +74,6 @@ extension Matrix where Element == Double {
       &ipiv32)
     try check(result: dgetriResult)
 
-    return Matrix(rows: size, columns: size, data: resultData)
+    return Matrix(size: .init(rows: size, columns: size), data: resultData)
   }
 }

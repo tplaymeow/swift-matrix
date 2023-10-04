@@ -5,8 +5,7 @@ extension Matrix where Element: FloatingPoint {
     _ right: Self,
     accuracy: Element
   ) -> Bool {
-    left.rows == right.rows
-      && left.columns == right.columns
+    left.size == right.size
       && zip(left.data, right.data)
         .allSatisfy { abs($1 - $0) < accuracy }
   }

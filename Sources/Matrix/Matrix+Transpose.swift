@@ -22,8 +22,8 @@ extension Matrix where Element == Double {
   ///   ```
   @inlinable
   public func transposed(multiplyBy multiplier: Double = 1.0) -> Self {
-    let rowsCount = Int32(self.rows)
-    let columnsCount = Int32(self.columns)
+    let rowsCount = Int32(self.rowsCount)
+    let columnsCount = Int32(self.columnsCount)
     var data = self.data
     var resultData = self.data
     cblas_domatcopy(
@@ -32,6 +32,8 @@ extension Matrix where Element == Double {
       multiplier,
       &data, columnsCount,
       &resultData, rowsCount)
-    return Matrix(rows: self.columns, columns: self.rows, data: resultData)
+    return Matrix(
+      size: .init(rows: self.columnsCount, columns: self.rowsCount),
+      data: resultData)
   }
 }

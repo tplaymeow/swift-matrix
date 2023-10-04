@@ -73,18 +73,18 @@ extension Matrix {
   ) rethrows -> Matrix<Result> {
     switch axis {
     case .row:
-      var result = Array(repeating: initialResult, count: self.columns)
-      for column in 0..<self.columns {
-        for row in 0..<self.rows {
+      var result = Array(repeating: initialResult, count: self.columnsCount)
+      for column in 0..<self.columnsCount {
+        for row in 0..<self.rowsCount {
           try updateAccumulatingResult(&result[column], self[row, column])
         }
       }
       return Matrix<Result>(column: result)
 
     case .column:
-      var result = Array(repeating: initialResult, count: self.columns)
-      for row in 0..<self.rows {
-        for column in 0..<self.columns {
+      var result = Array(repeating: initialResult, count: self.rowsCount)
+      for row in 0..<self.rowsCount {
+        for column in 0..<self.columnsCount {
           try updateAccumulatingResult(&result[row], self[row, column])
         }
       }

@@ -27,17 +27,17 @@ extension Matrix where Element == Double {
   ///   - `MatrixMultiplyError.incorrectSize` if the number of columns in the first matrix is not equal to the number of rows in the second matrix.
   @inlinable
   public static func * (_ left: Self, _ right: Self) throws -> Self {
-    guard left.columns == right.rows else {
+    guard left.columnsCount == right.rowsCount else {
       throw MatrixMultiplyError.incorrectSize
     }
 
-    let leftRowsCount = Int32(left.rows)
-    let rightColumnsCount = Int32(right.columns)
-    let leftColumnsRightRowsCount = Int32(left.columns)
+    let leftRowsCount = Int32(left.rowsCount)
+    let rightColumnsCount = Int32(right.columnsCount)
+    let leftColumnsRightRowsCount = Int32(left.columnsCount)
 
     var leftData = left.data
     var rightData = right.data
-    var resultData = Array(repeating: 0.0, count: left.rows * right.columns)
+    var resultData = Array(repeating: 0.0, count: left.rowsCount * right.columnsCount)
 
     cblas_dgemm(
       CblasRowMajor, CblasNoTrans, CblasNoTrans,
@@ -48,6 +48,8 @@ extension Matrix where Element == Double {
       0.0,
       &resultData, rightColumnsCount)
 
-    return Matrix(rows: left.rows, columns: right.columns, data: resultData)
+    return Matrix(
+      size: .init(rows: left.rowsCount, columns: right.columnsCount),
+      data: resultData)
   }
 }

@@ -10,8 +10,7 @@ extension Matrix {
     _ transform: (Element) throws -> NewElement
   ) rethrows -> Matrix<NewElement> {
     .init(
-      rows: self.rows,
-      columns: self.columns,
+      size: self.size,
       data: try self.data.map(transform))
   }
 }

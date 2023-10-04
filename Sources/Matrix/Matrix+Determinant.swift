@@ -34,7 +34,7 @@ extension Matrix where Element == Double {
       throw MatrixDeterminantError.notSquare
     }
 
-    let size = self.rows
+    let size = self.rowsCount
     let size32 = Int32(size)
     var ipiv32 = [Int32](repeating: 0, count: size)
     var resultData = self.data
@@ -57,7 +57,7 @@ extension Matrix where Element == Double {
 
     var result = 1.0
     for index in 0..<size {
-      result *= resultData[index * self.columns + index]
+      result *= resultData[index * self.columnsCount + index]
       if ipiv32[index] != index + 1 {
         result = -result
       }

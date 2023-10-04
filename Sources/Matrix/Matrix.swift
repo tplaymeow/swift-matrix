@@ -1,17 +1,13 @@
 public struct Matrix<Element> {
-  /// The number of rows in the matrix.
-  public let rows: Int
-
-  /// The number of columns in the matrix.
-  public let columns: Int
+  /// Size of the matrix
+  public let size: MatrixSize
 
   @usableFromInline
   internal var data: [Element]
 
   @usableFromInline
-  internal init(rows: Int, columns: Int, data: [Element]) {
-    self.rows = rows
-    self.columns = columns
+  internal init(size: MatrixSize, data: [Element]) {
+    self.size = size
     self.data = data
   }
 }
@@ -25,8 +21,7 @@ extension Matrix {
   ///   - element: The element to repeat in the matrix.
   @inlinable
   public init(rows: Int, columns: Int, repeating element: Element) {
-    self.rows = rows
-    self.columns = columns
+    self.size = .init(rows: rows, columns: columns)
     self.data = .init(repeating: element, count: rows * columns)
   }
 }
@@ -45,8 +40,7 @@ extension Matrix {
       throw MatrixError(description: "Elements count must be equal to rows*colums")
     }
 
-    self.rows = rows
-    self.columns = columns
+    self.size = .init(rows: rows, columns: columns)
     self.data = elements
   }
 }
@@ -66,8 +60,7 @@ extension Matrix {
       throw MatrixError(description: "Elements count must be equal to rows*colums")
     }
 
-    self.rows = rows
-    self.columns = columns
+    self.size = .init(rows: rows, columns: columns)
     self.data = .init(elements)
   }
 }
@@ -91,19 +84,44 @@ extension Matrix {
       return $0
     }
 
-    self.rows = rows.count
-    self.columns = firstRowCount
+    self.size = .init(rows: rows.count, columns: firstRowCount)
     self.data = data
   }
 }
 
 extension Matrix {
+  /// Initializes a matrix with a single row from an array of elements.
+  ///
+  /// - Parameter row: An array of elements representing a single row of the matrix.
+  ///
+  /// Use this initializer to create a matrix with a single row from the provided array of elements. The number of columns in the matrix is determined by the number of elements in the input array.
+  ///
+  /// - Example:
+  ///   ```swift
+  ///   let rowArray = [1.0, 2.0, 3.0]
+  ///   let matrix = Matrix(row: rowArray)
+  ///   // Represents a 1x3 matrix: [[1.0, 2.0, 3.0]]
+  ///   ```
+  @inlinable
   public init(row: [Element]) {
-    self.init(rows: 1, columns: row.count, data: row)
+    self.init(size: .init(rows: 1, columns: row.count), data: row)
   }
 
+  /// Initializes a matrix with a single column from an array of elements.
+  ///
+  /// - Parameter column: An array of elements representing a single column of the matrix.
+  ///
+  /// Use this initializer to create a matrix with a single column from the provided array of elements. The number of rows in the matrix is determined by the number of elements in the input array.
+  ///
+  /// - Example:
+  ///   ```swift
+  ///   let columnArray = [1.0, 2.0, 3.0]
+  ///   let matrix = Matrix(column: columnArray)
+  ///   // Represents a 3x1 matrix: [[1.0], [2.0], [3.0]]
+  ///   ```
+  @inlinable
   public init(column: [Element]) {
-    self.init(rows: column.count, columns: 1, data: column)
+    self.init(size: .init(rows: column.count, columns: 1), data: column)
   }
 }
 
@@ -141,11 +159,27 @@ extension Matrix {
   @inlinable
   public subscript(row: Int, column: Int) -> Element {
     _read {
-      yield self.data[row * self.columns + column]
+      yield self.data[row * self.size.columns + column]
     }
     _modify {
-      yield &self.data[row * self.columns + column]
+      yield &self.data[row * self.size.columns + column]
     }
+  }
+}
+
+extension Matrix {
+  /// The number of rows in the matrix.
+  @inlinable
+  @inline(__always)
+  public var rowsCount: Int {
+    self.size.rows
+  }
+
+  /// The number of columns in the matrix.
+  @inlinable
+  @inline(__always)
+  public var columnsCount: Int {
+    self.size.columns
   }
 }
 
@@ -155,7 +189,49 @@ extension Matrix {
   /// - Returns: `true` if the matrix is square; otherwise, `false`.
   @inlinable
   public var isSquare: Bool {
-    self.rows == self.columns
+    self.size.isSquare
+  }
+}
+
+extension Matrix {
+  /// Returns a flattened array containing all the elements of the matrix.
+  ///
+  /// Use this property to obtain a one-dimensional array that contains all the elements of the matrix.
+  /// The elements are arranged in row-major order, starting from the top-left corner of the matrix and proceeding row by row.
+  ///
+  /// - Example:
+  ///   ```swift
+  ///   let matrix = Matrix(rows: 2, columns: 3, data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+  ///   let flattenedArray = matrix.flattenArray
+  ///   // Resulting flattenedArray: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+  ///   ```
+  @inlinable
+  public var flattenArray: [Element] {
+    self.data
+  }
+
+  /// Returns a two-dimensional array containing the elements of the matrix.
+  ///
+  /// Use this property to obtain a two-dimensional array that represents the matrix.
+  /// The elements are organized in rows and columns, preserving the original matrix structure.
+  ///
+  /// - Example:
+  ///   ```swift
+  ///   let matrix = Matrix(rows: 2, columns: 3, data: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+  ///   let arrayRepresentation = matrix.array
+  ///   // Resulting arrayRepresentation:
+  ///   // [[1.0, 2.0, 3.0],
+  ///   //  [4.0, 5.0, 6.0]]
+  ///   ```
+  @inlinable
+  public var array: [[Element]] {
+    stride(
+      from: self.data.startIndex,
+      to: self.data.endIndex,
+      by: self.columnsCount
+    ).map {
+      Array(self.data[$0..<$0 + self.columnsCount])
+    }
   }
 }
 

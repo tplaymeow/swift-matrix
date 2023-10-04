@@ -16,8 +16,8 @@ extension Matrix {
   ///   ```
   @inlinable
   public subscript(row row: Int) -> RowSlice {
-    let start = row * self.columns
-    let end = (row + 1) * self.columns
+    let start = row * self.columnsCount
+    let end = (row + 1) * self.columnsCount
     return RowSlice(slice: self.data[start..<end])
   }
 }

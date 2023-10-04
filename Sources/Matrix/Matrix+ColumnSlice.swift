@@ -16,7 +16,12 @@ extension Matrix {
   ///   ```
   @inlinable
   public subscript(column column: Int) -> ColumnSlice {
-    ColumnSlice(column: column, rows: self.rows, columns: self.columns, data: self.data)
+    ColumnSlice(
+      column: column,
+      rows: self.rowsCount,
+      columns: self.columnsCount,
+      data: self.data
+    )
   }
 }
 
