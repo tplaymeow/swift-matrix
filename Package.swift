@@ -8,7 +8,8 @@ let package = Package(
     .library(name: "Matrix", targets: ["Matrix"])
   ],
   dependencies: [
-    .package(url: "https://github.com/google/swift-benchmark", exact: "0.1.2")
+    .package(url: "https://github.com/google/swift-benchmark", exact: "0.1.2"),
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0"),
   ],
   targets: [
     .systemLibrary(
