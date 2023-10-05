@@ -63,7 +63,7 @@ let column = matrix[column: 2] // Access the third column
 
 ## Documentation
 
-TODO
+For detailed documentation, please refer to the [documentation](https://tplaymeow.github.io/swift-matrix/documentation/matrix).
 
 ## Contributing
 
@@ -71,6 +71,6 @@ Contributions are welcome! If you find a bug or have an enhancement in mind, ple
 
 ## License
 
-TODO
+MatrixSwift is released under the [MIT License](LICENSE).
 
 
