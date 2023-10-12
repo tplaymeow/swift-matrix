@@ -77,7 +77,7 @@ let multiplySuite = BenchmarkSuite(name: "Multiply matrix") {
   }
 }
 
-let sumSuite = BenchmarkSuite(name: "Multiply matrix") {
+let sumSuite = BenchmarkSuite(name: "Sum matrix") {
   $0.benchmark("Row.Double") {
     _ = matrixDouble.sum(axis: .row)
   }

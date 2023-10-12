@@ -72,7 +72,7 @@ extension Matrix where Element: LinearAlgebraScalar {
       size32,
       &resultData,
       size32,
-      &ipiv32)
+      ipiv32)
     try check(result: dgetriResult)
 
     return Matrix(size: .init(rows: size, columns: size), data: resultData)

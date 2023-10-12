@@ -36,8 +36,6 @@ extension Matrix where Element: LinearAlgebraScalar {
     let rightColumnsCount = Int32(right.columnsCount)
     let leftColumnsRightRowsCount = Int32(left.columnsCount)
 
-    var leftData = left.data
-    var rightData = right.data
     var resultData: [Element] = .init(
       repeating: 0,
       count: left.rowsCount * right.columnsCount)
@@ -46,8 +44,8 @@ extension Matrix where Element: LinearAlgebraScalar {
       CblasRowMajor, CblasNoTrans, CblasNoTrans,
       leftRowsCount, rightColumnsCount, leftColumnsRightRowsCount,
       1,
-      &leftData, leftColumnsRightRowsCount,
-      &rightData, rightColumnsCount,
+      left.data, leftColumnsRightRowsCount,
+      right.data, rightColumnsCount,
       0,
       &resultData, rightColumnsCount)
 

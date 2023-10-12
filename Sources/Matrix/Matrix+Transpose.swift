@@ -25,13 +25,12 @@ extension Matrix where Element: LinearAlgebraScalar {
   public func transposed(multiplyBy multiplier: Element = 1) -> Self {
     let rowsCount = Int32(self.rowsCount)
     let columnsCount = Int32(self.columnsCount)
-    var data = self.data
     var resultData = self.data
     Element.cblas_omatcopy(
       CblasRowMajor, CblasTrans,
       rowsCount, columnsCount,
       multiplier,
-      &data, columnsCount,
+      self.data, columnsCount,
       &resultData, rowsCount)
     return Matrix(
       size: .init(rows: self.columnsCount, columns: self.rowsCount),
