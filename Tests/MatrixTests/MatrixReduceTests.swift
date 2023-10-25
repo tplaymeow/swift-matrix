@@ -23,6 +23,6 @@ final class MatrixReduceTests: XCTestCase {
     func testReduceAxis() throws {
         let matrix = try Matrix(rows: 2, columns: 2, elements: [1, 2, 3, 4])
         let rowProductMatrix = matrix.reduce(axis: .row, 1) { $0 * $1 }
-        XCTAssertEqual(rowProductMatrix, Matrix(rows: 2, columns: 1, data: [2, 12]))
+        XCTAssertEqual(rowProductMatrix, try Matrix(rows: 2, columns: 1, elements: [2, 12]))
     }
 }
