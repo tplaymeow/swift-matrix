@@ -17,7 +17,7 @@ final class MatrixReduceTests: XCTestCase {
   func testReduceAxisInto() throws {
     let matrix = try Matrix(rows: 2, columns: 2, elements: [1, 2, 3, 4])
     let columnSumMatrix = matrix.reduce(axis: .column, into: 0) { $0 += $1 }
-    XCTAssertEqual(columnSumMatrix, Matrix(rows: 2, columns: 1, data: [4, 6]))
+    XCTAssertEqual(columnSumMatrix, try Matrix(rows: 2, columns: 1, elements: [4, 6]))
   }
 
   func testReduceAxis() throws {
